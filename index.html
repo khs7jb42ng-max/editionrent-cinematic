@@ -453,3 +453,163 @@ document.querySelectorAll(".car-image img").forEach(img => {
 </script>
 </body>
 </
+  
+let audioContext;
+let audioNodes = [];
+let soundRunning = false;
+
+function startLuxurySound() {
+  if (soundRunning) return;
+
+  const AudioCtx = window.AudioContext || window.webkitAudioContext;
+  if (!AudioCtx) {
+    document.getElementById("soundStatus").textContent =
+      "Audio is not supported in this browser.";
+    return;
+  }
+
+  audioContext = audioContext || new AudioCtx();
+
+  audioContext.resume().then(() => {
+    if (soundRunning) return;
+    soundRunning = true;
+
+    const ctx = audioContext;
+    const master = ctx.createGain();
+    master.gain.value = 0.16;
+    master.connect(ctx.destination);
+    audioNodes.push(master);
+
+    // Synthetic engine rumble
+    const engine = ctx.createOscillator();
+    engine.type = "sawtooth";
+    engine.frequency.value = 48;
+
+    const engineFilter = ctx.createBiquadFilter();
+    engineFilter.type = "lowpass";
+    engineFilter.frequency.value = 170;
+
+    const engineGain = ctx.createGain();
+    engineGain.gain.value = 0.22;
+
+    engine.connect(engineFilter);
+    engineFilter.connect(engineGain);
+    engineGain.connect(master);
+    engine.start();
+
+    // Engine vibration
+    const lfo = ctx.createOscillator();
+    lfo.type = "sine";
+    lfo.frequency.value = 3;
+
+    const lfoGain = ctx.createGain();
+    lfoGain.gain.value = 8;
+    lfo.connect(lfoGain);
+    lfoGain.connect(engine.frequency);
+    lfo.start();
+
+    // Cinematic ambient music synthesized in browser
+    [55, 82.41, 110].forEach((frequency, index) => {
+      const pad = ctx.createOscillator();
+      pad.type = "triangle";
+      pad.frequency.value = frequency;
+
+      const padGain = ctx.createGain();
+      padGain.gain.value = index === 0 ? 0.13 : 0.045;
+
+      const filter = ctx.createBiquadFilter();
+      filter.type = "lowpass";
+      filter.frequency.value = 240;
+
+      pad.connect(filter);
+      filter.connect(padGain);
+      padGain.connect(master);
+      pad.start();
+
+      audioNodes.push(pad, padGain, filter);
+    });
+
+    audioNodes.push(engine, engineFilter, engineGain, lfo, lfoGain);
+
+    document.getElementById("soundStatus").textContent =
+      "SOUND ON · Synthetic engine + cinematic ambience.";
+    document.getElementById("soundStart").textContent = "♫ SOUND PLAYING";
+  }).catch(() => {
+    document.getElementById("soundStatus").textContent =
+      "Tap Start Sound again to enable audio.";
+  });
+}
+
+function stopLuxurySound() {
+  if (!audioContext || !soundRunning) return;
+
+  soundRunning = false;
+
+  audioNodes.forEach(node => {
+    try {
+      if (typeof node.stop === "function") node.stop();
+      if (typeof node.disconnect === "function") node.disconnect();
+    } catch (e) {}
+  });
+
+  audioNodes = [];
+  audioContext.suspend();
+
+  document.getElementById("soundStatus").textContent = "SOUND OFF";
+  document.getElementById("soundStart").textContent = "▶ START ENGINE & MUSIC";
+}
+
+document.getElementById("soundStart").addEventListener("click", startLuxurySound);
+document.getElementById("soundStop").addEventListener("click", stopLuxurySound);
+
+<section id="showroom3d" style="background:#090909;padding:75px 5%;text-align:center">
+  <p style="color:#c6a66a;letter-spacing:4px;font-size:11px">INTERACTIVE SHOWROOM</p>
+  <h2 style="font-size:clamp(42px,8vw,76px);margin:18px 0">
+    TOUCH THE <span style="color:#c6a66a">MACHINE.</span>
+  </h2>
+  <p style="color:#aaa;font-size:12px;margin-bottom:28px">
+    Drehe das 3D-Modell mit deinem Finger. Zoome mit zwei Fingern.
+  </p>
+
+  <div style="max-width:950px;margin:auto;border:1px solid #34302a;background:radial-gradient(ellipse,#29251e,#080808 70%);position:relative">
+    <model-viewer
+      id="luxuryCar3D"
+      src="https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/CarConcept/GLB/CarConcept.glb"
+      alt="Interaktives 3D-Konzeptfahrzeug"
+      camera-controls
+      auto-rotate
+      auto-rotate-delay="1000"
+      rotation-per-second="18deg"
+      shadow-intensity="1"
+      exposure="1.1"
+      environment-image="neutral"
+      interaction-prompt="auto"
+      loading="eager"
+      style="width:100%;height:420px;background:transparent;--poster-color:transparent">
+      <div slot="progress-bar" style="color:#c6a66a;padding:15px">
+        3D-MODELL WIRD GELADEN …
+      </div>
+    </model-viewer>
+  </div>
+
+  <p style="font-size:10px;color:#999;margin:14px 0 24px">
+    Konzeptmodell zur interaktiven Vorschau – kein originales Mietfahrzeug.
+  </p>
+
+  <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap">
+    <button id="soundStart" class="button" type="button">
+      ▶ START ENGINE & MUSIC
+    </button>
+    <button id="soundStop" class="button button-outline" type="button">
+      ■ STOP SOUND
+    </button>
+  </div>
+  <p id="soundStatus" aria-live="polite" style="color:#aaa;font-size:11px;margin-top:15px">
+    SOUND OFF · Drücke Start, um den Sound zu aktivieren.
+  </p>
+</section>
+<section class="experience" id="experience">
+  
+<script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
+
+<section class="experience" id="experience">
