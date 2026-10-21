@@ -1,0 +1,455 @@
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080808">
+<meta name="description" content="Premium Sportwagen und Luxusautos in Basel mieten. Edition Rent Basel.">
+<title>EDITION RENT — Luxury Car Experience Basel</title>
+
+<style>
+:root {
+  --gold: #d7b56d;
+  --black: #080808;
+  --panel: #121212;
+  --muted: #a7a7a7;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--black);
+  color: #fff;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+a { color: inherit; text-decoration: none; }
+button { font: inherit; cursor: pointer; }
+header {
+  position: absolute;
+  z-index: 10;
+  top: 0; left: 0; right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 23px 7%;
+  border-bottom: 1px solid #ffffff20;
+}
+.logo {
+  font-size: 17px;
+  letter-spacing: 4px;
+  font-weight: 800;
+}
+.logo span { color: var(--gold); }
+nav { display: flex; gap: 25px; align-items: center; font-size: 13px; }
+nav a:hover { color: var(--gold); }
+.gold-btn {
+  display: inline-block;
+  background: var(--gold);
+  color: #080808;
+  padding: 14px 21px;
+  font-size: 12px;
+  letter-spacing: 1px;
+  font-weight: 800;
+  border: 0;
+  transition: .25s;
+}
+.gold-btn:hover { background: white; transform: translateY(-2px); }
+.hero {
+  min-height: 93vh;
+  display: flex;
+  align-items: center;
+  padding: 145px 8% 85px;
+  position: relative;
+  overflow: hidden;
+  background:
+    linear-gradient(90deg, #050505 0%, #050505d9 38%, #05050530 100%),
+    linear-gradient(0deg, #080808 0%, transparent 35%),
+    url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=2000&q=85")
+    center 55% / cover;
+}
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 35%, #d7b56d0d 50%, transparent 65%);
+  transform: translateX(-100%);
+  animation: shine 7s infinite;
+  pointer-events: none;
+}
+@keyframes shine {
+  0%, 60% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+.hero-content { max-width: 680px; position: relative; z-index: 1; animation: enter 1.1s ease both; }
+@keyframes enter {
+  from { opacity: 0; transform: translateY(28px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.eyebrow {
+  color: var(--gold);
+  font-size: 11px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+}
+h1 {
+  font-size: clamp(44px, 8vw, 92px);
+  line-height: .98;
+  letter-spacing: -3px;
+  margin: 23px 0;
+  font-weight: 800;
+}
+h1 span { color: var(--gold); }
+.hero p { color: #d1d1d1; line-height: 1.8; max-width: 460px; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 13px; margin-top: 30px; }
+.outline-btn {
+  display: inline-block;
+  border: 1px solid #ffffff70;
+  padding: 14px 20px;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+.outline-btn:hover { border-color: var(--gold); color: var(--gold); }
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  border-top: 1px solid #ffffff30;
+  margin-top: 55px;
+  padding-top: 22px;
+  max-width: 480px;
+  gap: 12px;
+}
+.stats strong { display: block; color: var(--gold); font-size: 22px; }
+.stats small { color: #aaa; font-size: 10px; letter-spacing: 1px; }
+section { padding: 95px 7%; }
+.section-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 20px;
+  margin-bottom: 35px;
+}
+h2 { font-size: clamp(30px,5vw,50px); margin: 12px 0; letter-spacing: -1px; }
+.sub { color: var(--muted); line-height: 1.7; }
+.filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 28px; }
+.filter {
+  color: #ddd; background: transparent;
+  border: 1px solid #383838; padding: 10px 17px;
+  font-size: 12px;
+}
+.filter.active, .filter:hover {
+  background: var(--gold); color: #080808; border-color: var(--gold);
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: 20px;
+}
+.car-card {
+  background: var(--panel);
+  border: 1px solid #242424;
+  overflow: hidden;
+  transition: transform .35s, border-color .35s;
+  animation: enter .65s both;
+}
+.car-card:hover { transform: translateY(-7px); border-color: #b99b5a; }
+.car-image { height: 225px; position: relative; overflow: hidden; background: #191919; }
+.car-image img {
+  width: 100%; height: 100%; object-fit: cover;
+  display: block; transition: transform .7s;
+}
+.car-card:hover img { transform: scale(1.07); }
+.tag {
+  position: absolute; left: 13px; top: 13px;
+  background: #080808d9; color: var(--gold);
+  padding: 7px 10px; font-size: 10px; letter-spacing: 1px;
+}
+.car-info { padding: 22px; }
+.car-info h3 { margin: 0 0 8px; font-size: 20px; }
+.car-info .sub { font-size: 12px; min-height: 20px; }
+.car-bottom {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 10px; border-top: 1px solid #ffffff18; padding-top: 17px; margin-top: 20px;
+}
+.price { color: var(--gold); font-size: 22px; font-weight: 800; }
+.price small { color: #aaa; font-size: 10px; font-weight: 400; }
+.book {
+  border: 1px solid #6c5a36; padding: 11px 12px;
+  font-size: 10px; letter-spacing: 1px;
+}
+.book:hover { background: var(--gold); color: #000; }
+.experience {
+  background: linear-gradient(120deg,#17130c,#090909 60%);
+  border-top: 1px solid #302719;
+  border-bottom: 1px solid #302719;
+}
+.experience-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 55px; align-items: center;
+}
+.experience-image {
+  min-height: 390px;
+  background: url("https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=1200&q=85") center/cover;
+}
+.features { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-top: 28px; }
+.feature { border-top: 1px solid #ffffff30; padding-top: 15px; }
+.feature strong { color: var(--gold); display: block; margin-bottom: 8px; }
+.feature span { font-size: 12px; color: #aaa; line-height: 1.6; }
+.contact {
+  text-align: center;
+  background: radial-gradient(ellipse at center,#241d10 0%,#080808 65%);
+}
+.contact p { color: #aaa; line-height: 1.8; }
+.contact-actions { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-top: 25px; }
+footer {
+  padding: 28px 7%; display: flex; flex-wrap: wrap;
+  justify-content: space-between; gap: 15px;
+  border-top: 1px solid #ffffff1c; color: #888; font-size: 11px;
+}
+.whatsapp {
+  position: fixed; z-index: 20; right: 18px; bottom: 18px;
+  background: #25d366; color: #06180b; border-radius: 40px;
+  padding: 15px 18px; font-weight: 800; font-size: 13px;
+  box-shadow: 0 6px 25px #0008;
+}
+@media(max-width:850px) {
+  header { padding: 18px 5%; }
+  nav { gap: 12px; }
+  nav a:not(.gold-btn) { display: none; }
+  .hero { min-height: 88vh; padding: 130px 6% 65px; background-position: 58% center; }
+  .grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  section { padding: 70px 5%; }
+  .experience-grid { gap: 28px; }
+}
+@media(max-width:560px) {
+  .logo { font-size: 14px; letter-spacing: 2px; }
+  header .gold-btn { padding: 11px 12px; font-size: 10px; }
+  h1 { letter-spacing: -1.5px; }
+  .hero { background-position: 57% center; }
+  .stats strong { font-size: 19px; }
+  .grid { grid-template-columns: 1fr; }
+  .car-image { height: 240px; }
+  .section-top { align-items: start; flex-direction: column; }
+  .experience-grid { grid-template-columns: 1fr; }
+  .experience-image { min-height: 250px; }
+  .features { gap: 16px; }
+  footer { flex-direction: column; }
+}
+@media(prefers-reduced-motion:reduce) {
+  *,*::before,*::after { animation: none !important; scroll-behavior: auto !important; transition: none !important; }
+}
+</style>
+</head>
+
+<body>
+<header>
+  <a class="logo" href="#home">EDITION <span>RENT</span></a>
+  <nav>
+    <a href="#cars">Fahrzeuge</a>
+    <a href="#experience">Experience</a>
+    <a href="#contact">Kontakt</a>
+    <a class="gold-btn" href="https://www.editionrent.ch/book-online">JETZT BUCHEN ↗</a>
+  </nav>
+</header>
+
+<main>
+<section class="hero" id="home">
+  <div class="hero-content">
+    <div class="eyebrow">Premium car rental · Basel Switzerland</div>
+    <h1>DRIVE<br>YOUR <span>DREAM.</span></h1>
+    <p>Erlebe aussergewöhnliche Fahrzeuge. Sportwagen, Performance und Luxus – deine nächste Fahrt beginnt in Basel.</p>
+    <div class="hero-actions">
+      <a class="gold-btn" href="#cars">FAHRZEUGE ENTDECKEN ↘</a>
+      <a class="outline-btn" href="https://wa.me/41774777728?text=Hallo%20Edition%20Rent%2C%20ich%20interessiere%20mich%20f%C3%BCr%20eine%20Fahrzeugmiete.">WHATSAPP ANFRAGE ↗</a>
+    </div>
+    <div class="stats">
+      <div><strong>01</strong><small>DEIN FAHRERLEBNIS</small></div>
+      <div><strong>CH</strong><small>BASEL, SCHWEIZ</small></div>
+      <div><strong>V8+</strong><small>PURE EMOTION</small></div>
+    </div>
+  </div>
+</section>
+
+<section id="cars">
+  <div class="section-top">
+    <div>
+      <div class="eyebrow">The collection</div>
+      <h2>UNSERE <span style="color:var(--gold)">FAHRZEUGE.</span></h2>
+      <div class="sub">Wähle deinen Favoriten und frage deine Wunschzeit direkt an.</div>
+    </div>
+    <a class="outline-btn" href="https://www.editionrent.ch/book-online">ALLE FAHRZEUGE ↗</a>
+  </div>
+
+  <div class="filters">
+    <button class="filter active" data-filter="all">Alle</button>
+    <button class="filter" data-filter="sport">Sport</button>
+    <button class="filter" data-filter="luxury">Luxury</button>
+    <button class="filter" data-filter="suv">SUV</button>
+  </div>
+
+  <div class="grid">
+    <article class="car-card" data-type="sport">
+      <div class="car-image">
+        <img src="https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=900&q=85" alt="BMW Sportwagen" loading="lazy">
+        <span class="tag">M PERFORMANCE</span>
+      </div>
+      <div class="car-info">
+        <h3>BMW M5 F90</h3>
+        <div class="sub">625 PS · M xDrive · 4 Türen</div>
+        <div class="car-bottom">
+          <div class="price">CHF 280 <small>/ ab 3 Std.</small></div>
+          <a class="book" href="https://www.editionrent.ch/service-page/bmw-m5-f90">DETAILS ↗</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="car-card" data-type="sport">
+      <div class="car-image">
+        <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=85" alt="Porsche Sportwagen" loading="lazy">
+        <span class="tag">SPORT ICON</span>
+      </div>
+      <div class="car-info">
+        <h3>Porsche 911 Turbo S</h3>
+        <div class="sub">Performance · Sport Exhaust Variante</div>
+        <div class="car-bottom">
+          <div class="price">CHF 350 <small>/ ab 3 Std.</small></div>
+          <a class="book" href="https://www.editionrent.ch/book-online">DETAILS ↗</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="car-card" data-type="luxury">
+      <div class="car-image">
+        <img src="https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=900&q=85" alt="Luxuslimousine" loading="lazy">
+        <span class="tag">ULTIMATE LUXURY</span>
+      </div>
+      <div class="car-info">
+        <h3>Rolls-Royce Ghost</h3>
+        <div class="sub">V12 · Sternenhimmel · Luxuskomfort</div>
+        <div class="car-bottom">
+          <div class="price">CHF 470 <small>/ ab 3 Std.</small></div>
+          <a class="book" href="https://www.editionrent.ch/service-page/rolls-royce-ghost-1">DETAILS ↗</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="car-card" data-type="suv">
+      <div class="car-image">
+        <img src="https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&w=900&q=85" alt="Premium SUV" loading="lazy">
+        <span class="tag">LUXURY SUV</span>
+      </div>
+      <div class="car-info">
+        <h3>Lamborghini Urus</h3>
+        <div class="sub">Super SUV · Sportliches Design</div>
+        <div class="car-bottom">
+          <div class="price">CHF 450 <small>/ ab 3 Std.</small></div>
+          <a class="book" href="https://www.editionrent.ch/book-online">DETAILS ↗</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="car-card" data-type="sport">
+      <div class="car-image">
+        <img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=900&q=85" alt="Sportwagen" loading="lazy">
+        <span class="tag">PURE PERFORMANCE</span>
+      </div>
+      <div class="car-info">
+        <h3>BMW M3 Competition</h3>
+        <div class="sub">G80 · Competition Performance</div>
+        <div class="car-bottom">
+          <div class="price">CHF 320 <small>/ ab 3 Std.</small></div>
+          <a class="book" href="https://www.editionrent.ch/book-online">DETAILS ↗</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="car-card" data-type="luxury">
+      <div class="car-image">
+        <img src="https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&w=900&q=85" alt="Mercedes Luxusauto" loading="lazy">
+        <span class="tag">AMG COLLECTION</span>
+      </div>
+      <div class="car-info">
+        <h3>Mercedes C63s AMG</h3>
+        <div class="sub">AMG Performance · Sportlicher Charakter</div>
+        <div class="car-bottom">
+          <div class="price">CHF 220 <small>/ ab 3 Std.</small></div>
+          <a class="book" href="https://www.editionrent.ch/book-online">DETAILS ↗</a>
+        </div>
+      </div>
+    </article>
+  </div>
+  <p class="sub" style="font-size:11px;margin-top:22px">
+    Angezeigte Preise sind Richtpreise für bestimmte Fahrzeugvarianten und Mietbedingungen. Verfügbarkeit, Mietdauer und aktuelle Preise bitte vor der Buchung beim Anbieter bestätigen.
+    <br>Hinweis: Die Bilder dienen als visuelle Vorschau und sind nicht für jedes Fahrzeug garantiert das exakte Mietfahrzeug.
+  </p>
+</section>
+
+<section class="experience" id="experience">
+  <div class="experience-grid">
+    <div class="experience-image" role="img" aria-label="Sportwagen in einer dunklen Umgebung"></div>
+    <div>
+      <div class="eyebrow">More than a rental</div>
+      <h2>FEEL THE<br><span style="color:var(--gold)">EXPERIENCE.</span></h2>
+      <p class="sub">Dein nächstes Fahrerlebnis wartet. Entdecke die Flotte von Edition Rent und kontaktiere das Team für deine Wunschfahrt.</p>
+      <div class="features">
+        <div class="feature"><strong>01 / Performance</strong><span>Sportwagen und starke Motoren für besondere Momente.</span></div>
+        <div class="feature"><strong>02 / Luxury</strong><span>Komfort und Design für deinen grossen Auftritt.</span></div>
+        <div class="feature"><strong>03 / Basel</strong><span>Dein Ausgangspunkt in der Schweiz.</span></div>
+        <div class="feature"><strong>04 / Direct contact</strong><span>Frage Verfügbarkeit und Mietbedingungen direkt an.</span></div>
+      </div>
+      <a class="gold-btn" style="margin-top:28px" href="https://www.editionrent.ch/book-online">FLOTTE ANSEHEN ↗</a>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="eyebrow">Your next drive starts here</div>
+  <h2>BEREIT FÜR <span style="color:var(--gold)">DIE STRASSE?</span></h2>
+  <p>Edition Rent Basel<br>Güterstrasse 267, 4053 Basel, Schweiz</p>
+  <div class="contact-actions">
+    <a class="gold-btn" href="https://wa.me/41774777728?text=Hallo%20Edition%20Rent%2C%20ich%20m%C3%B6chte%20ein%20Fahrzeug%20mieten.">WHATSAPP KONTAKT ↗</a>
+    <a class="outline-btn" href="https://www.editionrent.ch/book-online">ONLINE BUCHEN ↗</a>
+    <a class="outline-btn" href="tel:+41774777728">ANRUFEN</a>
+  </div>
+</section>
+</main>
+
+<footer>
+  <a class="logo" href="#home">EDITION <span>RENT</span></a>
+  <span>Basel · Switzerland</span>
+  <span>© <span id="year"></span> Edition Rent Experience</span>
+  <a href="https://www.editionrent.ch/">Offizielle Website ↗</a>
+</footer>
+
+<a class="whatsapp" href="https://wa.me/41774777728?text=Hallo%20Edition%20Rent%2C%20ich%20habe%20eine%20Frage." aria-label="WhatsApp kontaktieren">WhatsApp ↗</a>
+
+<script>
+document.getElementById("year").textContent = new Date().getFullYear();
+
+const filters = document.querySelectorAll(".filter");
+const cars = document.querySelectorAll(".car-card");
+
+filters.forEach(button => {
+  button.addEventListener("click", () => {
+    filters.forEach(item => item.classList.remove("active"));
+    button.classList.add("active");
+
+    const selected = button.dataset.filter;
+    cars.forEach(car => {
+      car.style.display =
+        selected === "all" || car.dataset.type === selected
+        ? "" : "none";
+    });
+  });
+});
+
+// Falls ein Bild nicht geladen werden kann, bleibt eine dunkle Karte sichtbar.
+document.querySelectorAll(".car-image img").forEach(img => {
+  img.addEventListener("error", () => {
+    img.style.display = "none";
+    img.parentElement.style.background =
+      "linear-gradient(135deg,#252018,#090909)";
+  });
+});
+</script>
+</body>
+</html>
